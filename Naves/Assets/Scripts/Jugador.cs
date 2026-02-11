@@ -98,7 +98,19 @@ public class Jugador : MonoBehaviour
             if (vidas == 0)
             {
                 Destroy(this.gameObject);
-                SceneManager.LoadScene(1);
+                SceneManager.LoadScene("GameOver");
+            }
+            componenteManejadorUI.ActualizarVidas(vidas);
+            Debug.Log(vidas);
+        }
+
+        if (collision.gameObject.tag == "enemigo")
+        {
+            vidas -= 1;
+            if (vidas == 0)
+            {
+                Destroy(this.gameObject);
+                SceneManager.LoadScene("GameOver");
             }
             componenteManejadorUI.ActualizarVidas(vidas);
             Debug.Log(vidas);

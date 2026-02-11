@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ManejadorGameOver : MonoBehaviour
 {
@@ -15,5 +16,10 @@ public class ManejadorGameOver : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void RegresarInicio()
+    {
+        SceneManager.LoadScene("Inicio");
     }
 }
