@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33ac73e41bf01c14f8c2dc4cd5004858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemigo
+  prefabBala: {fileID: 2487686517827281107, guid: 33715659fc40dbc44850ce5eb7f6934f, type: 3}
 --- !u!65 &5876455128272186480
 BoxCollider:
   m_ObjectHideFlags: 0

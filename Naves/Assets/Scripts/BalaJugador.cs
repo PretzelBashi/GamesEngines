@@ -33,5 +33,12 @@ public class BalaJugador : MonoBehaviour
             Destroy(this.gameObject);
             componenteManejadorUI.ActualizarPuntuacion(10);
         }
+
+        if (collision.gameObject.tag == "enemigo")
+        {
+            Destroy(collision.gameObject);
+            Destroy(this.gameObject);
+            componenteManejadorUI.ActualizarPuntuacion(10);
+        }
     }
 }

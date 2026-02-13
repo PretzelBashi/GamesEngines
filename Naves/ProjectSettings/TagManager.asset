@@ -6,6 +6,9 @@ TagManager:
   tags:
   - asteroide
   - enemigo
+  - balaJugador
+  - balaEnemigo
+  - powerUp
   layers:
   - Default
   - TransparentFX
