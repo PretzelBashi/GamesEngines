@@ -52,7 +52,7 @@ public class Jugador : MonoBehaviour
         if (!vulnerabilidad)
         {
             contador_parpadeo += Time.deltaTime;
-            if (contador_parpadeo > 0.5f)
+            if (contador_parpadeo > 0.2f)
             {
                 if (modeloNave.activeSelf) { modeloNave.SetActive(false); }
                 else
@@ -63,7 +63,7 @@ public class Jugador : MonoBehaviour
                 contador_parpadeo = 0;
             }
 
-            if(contador_duracion >= 6) { vulnerabilidad = true; modeloNave.SetActive(true); }
+            if(contador_duracion >= 12) { vulnerabilidad = true; modeloNave.SetActive(true); }
         }
 
 
@@ -162,17 +162,20 @@ public class Jugador : MonoBehaviour
 
     void PerderUnaVida(int daño)
     {
-        vidas -= daño;
-        cantidad_balas--;
-        vulnerabilidad = false;
-        
-        if (cantidad_balas > 0) { cantidad_balas = 1; };
-        if (vidas == 0)
+        if (!vulnerabilidad)
         {
-            Destroy(this.gameObject);
-            SceneManager.LoadScene("GameOver");
+            vidas -= daño;
+            cantidad_balas--;
+            vulnerabilidad = false;
+
+            if (cantidad_balas > 0) { cantidad_balas = 1; };
+            if (vidas == 0)
+            {
+                Destroy(this.gameObject);
+                SceneManager.LoadScene("GameOver");
+            }
+            componenteManejadorUI.ActualizarVidas(vidas);
+            Debug.Log(vidas);
         }
-        componenteManejadorUI.ActualizarVidas(vidas);
-        Debug.Log(vidas);
     }
 }
