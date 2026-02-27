@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - moneda
+  - goomba
+  - goomba_pared
   layers:
   - Default
   - TransparentFX

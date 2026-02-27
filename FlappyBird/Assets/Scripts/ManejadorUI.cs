@@ -5,7 +5,7 @@ public class ManejadorUI : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     Text componenteTextoPuntuacion;
-    float puntos;
+    int puntos;
     void Start()
     {
         componenteTextoPuntuacion = GameObject.Find("TextoPuntuacion").GetComponent<Text>();
@@ -16,5 +16,6 @@ public class ManejadorUI : MonoBehaviour
     public void SumarPunto()
     {
         componenteTextoPuntuacion.text = "Puntos: " + ++puntos;
+        DatosPasar.puntuacion = puntos;
     }
 }

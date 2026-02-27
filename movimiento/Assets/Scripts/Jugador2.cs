@@ -10,6 +10,15 @@ public class Jugador2 : MonoBehaviour
     Animator componenteAnimator;
     Vector3 rotacion;
     public ManejadorUI manejadorUI;
+
+    public GameObject prefabMarioMuerto;
+    public GameObject AudioMarioMuerte;
+
+    public GameObject sonidoMoneda;
+    public GameObject sonidoSalto;
+    public GameObject sonidoGoomba;
+
+    AudioSource componenteAudioSource;
     void Start()
     {
         componenteCC = this.GetComponent<CharacterController>();
@@ -17,6 +26,7 @@ public class Jugador2 : MonoBehaviour
         saltosMaximos = 2;
         componenteAnimator = this.transform.GetChild(0).gameObject.GetComponent<Animator>();
         rotacion = Vector3.zero;
+        componenteAudioSource = this.GetComponent <AudioSource>();
     }
 
     // Update is called once per frame
@@ -56,6 +66,8 @@ public class Jugador2 : MonoBehaviour
         {
             velocidad.y = 12;
             saltosActuales--;
+            sonidoSalto.GetComponent<AudioSource>().Play();
+
         }
 
 
@@ -70,6 +82,23 @@ public class Jugador2 : MonoBehaviour
         {
             Destroy(hit.gameObject);
             manejadorUI.TomarMoneda();
+            sonidoMoneda.GetComponent<AudioSource>().Play();
+        }
+
+        if (hit.gameObject.tag == "goomba")
+        {
+            if(transform.position.y > hit.gameObject.transform.position.y)
+            {
+                Destroy(hit.gameObject);
+                componenteCC.Move(new Vector3(0,0.1f,0));
+                velocidad.y = 12;
+            } else
+            {
+                Instantiate(prefabMarioMuerto, transform.position, Quaternion.Euler(0,0,0));
+                Destroy(this.gameObject);
+                sonidoGoomba.GetComponent<AudioSource>().Play();
+                AudioMarioMuerte.GetComponentInParent<AudioSource>().Stop();
+            }
         }
     }
 }
