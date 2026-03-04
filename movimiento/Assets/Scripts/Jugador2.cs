@@ -18,6 +18,9 @@ public class Jugador2 : MonoBehaviour
     public GameObject sonidoSalto;
     public GameObject sonidoGoomba;
 
+    public ParticleSystem humoMario;
+    ParticleSystem.MainModule humoMain;
+
     AudioSource componenteAudioSource;
     void Start()
     {
@@ -27,6 +30,10 @@ public class Jugador2 : MonoBehaviour
         componenteAnimator = this.transform.GetChild(0).gameObject.GetComponent<Animator>();
         rotacion = Vector3.zero;
         componenteAudioSource = this.GetComponent <AudioSource>();
+
+        humoMain = humoMario.main;
+
+        humoMario.startLifetime = 0;
     }
 
     // Update is called once per frame
@@ -35,14 +42,17 @@ public class Jugador2 : MonoBehaviour
         if (Input.GetAxis("Horizontal") != 0 && velocidad.y == -1)
         {
             componenteAnimator.SetInteger("Estado", 1);
+            humoMain.startLifetime = 1;
         }
         else if (velocidad.y != -1)
         {
             componenteAnimator.SetInteger("Estado", 2);
+            humoMain.startLifetime = 0;
         }
         else 
         {
             componenteAnimator.SetInteger("Estado", 0);
+            humoMain.startLifetime = 0;
         }
 
         if(Input.GetAxis("Horizontal") > 0)
@@ -69,6 +79,7 @@ public class Jugador2 : MonoBehaviour
             sonidoSalto.GetComponent<AudioSource>().Play();
 
         }
+
 
 
 

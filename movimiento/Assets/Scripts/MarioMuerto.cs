@@ -1,4 +1,6 @@
+using Unity.VectorGraphics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MarioMuerto : MonoBehaviour
 {
@@ -18,5 +20,10 @@ public class MarioMuerto : MonoBehaviour
         posicion.y -= velocidad_y * Time.deltaTime;
         velocidad_y += Time.deltaTime;
         this.transform.position = posicion;
+
+        if(posicion.y < -25)
+        {
+            SceneManager.LoadScene("GameOver");
+        }
     }
 }
