@@ -20,9 +20,9 @@ public class Jugador : MonoBehaviour
 
     void Update()
     {
-        velocidad.x = Input.GetAxis("Horizontal") * 2;
-        velocidad.z = Input.GetAxis("Vertical") * 2;
-
+        velocidad.x = Input.GetAxisRaw("Horizontal") * 2;
+        velocidad.z = Input.GetAxisRaw("Vertical") * 2;
+        animator.SetInteger("Estado", 0);
         velocidad.y -= 10 * Time.deltaTime;
 
 
@@ -39,6 +39,18 @@ public class Jugador : MonoBehaviour
         if(velocidad.x != 0 || velocidad.z != 0)
         {
             rotacion.y = Herramientas.ObtenerAngulo2D(new Vector2(0, 0), new Vector2(velocidad.x, velocidad.z));            
+        }
+        
+        if(velocidad.x == 0 && velocidad.z == 0 && characterController.isGrounded)
+        {
+            animator.SetInteger("Estado", 0);
+        } 
+        else if ((velocidad.x != 0 || velocidad.z != 0) && characterController.isGrounded)
+        {
+            animator.SetInteger("Estado", 1);
+        } else if (!characterController.isGrounded)
+        {
+            animator.SetInteger("Estado", 2);
         }
 
  
