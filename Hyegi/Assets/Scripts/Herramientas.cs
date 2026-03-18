@@ -26,11 +26,6 @@ public class Herramientas : MonoBehaviour
         float cos = catetoAdyacente / hipotenusa;
         float arcocoseno = Mathf.Acos(cos) * Mathf.Rad2Deg;
 
-        Debug.Log("hipotenusa " + hipotenusa);
-        Debug.Log("cateto adyacente " + catetoAdyacente);
-        Debug.Log("coseno" + cos);
-        Debug.Log("arcocoseno" + arcocoseno);
-
         if (punto2.y < punto1.y)
         {
             arcocoseno = -arcocoseno;

@@ -22,7 +22,7 @@ public class Goomba2 : MonoBehaviour
 
         posicion = Vector3.MoveTowards(posicion, new Vector3(jugador.transform.position.x, posicion.y, jugador.transform.position.z), 1*Time.deltaTime); //Obviamente sigue en todos los ejes
 
-        Debug.Log(Vector3.Distance(this.transform.position, jugador.transform.position)); //Calcula tomando en cuenta todos los ejes
+        
         this.transform.position = posicion;
     }
 }

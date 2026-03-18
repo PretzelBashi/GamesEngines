@@ -9,12 +9,18 @@ public class Jugador : MonoBehaviour
     Vector3 rotacion;
 
     Animator animator;
+
+    public GameObject contenedorCamara;
+    GameObject auxiliarRotacionCamara;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         velocidad = Vector3.zero;
         rotacion = Vector3.zero;
         animator = this.transform.GetChild(0).GetComponent<Animator>();
+        auxiliarRotacionCamara = new GameObject();
+        auxiliarRotacionCamara.transform.rotation = auxiliarRotacionCamara.transform.rotation;
     }
 
 
@@ -38,7 +44,8 @@ public class Jugador : MonoBehaviour
 
         if(velocidad.x != 0 || velocidad.z != 0)
         {
-            rotacion.y = Herramientas.ObtenerAngulo2D(new Vector2(0, 0), new Vector2(velocidad.x, velocidad.z));            
+            Vector3 direccionMovimiento = contenedorCamara.transform.TransformDirection(velocidad);
+            rotacion.y = Herramientas.ObtenerAngulo2D(new Vector2(0, 0), new Vector2(direccionMovimiento.x, direccionMovimiento.z));            
         }
         
         if(velocidad.x == 0 && velocidad.z == 0 && characterController.isGrounded)
@@ -53,10 +60,25 @@ public class Jugador : MonoBehaviour
             animator.SetInteger("Estado", 2);
         }
 
- 
 
 
-        characterController.Move(velocidad * Time.deltaTime);
+        auxiliarRotacionCamara.transform.rotation = auxiliarRotacionCamara.transform.rotation;
+        auxiliarRotacionCamara.transform.rotation = Quaternion.Euler(new Vector3(0, auxiliarRotacionCamara.transform.rotation.eulerAngles.y, 0));
+
+        RaycastHit hit;
+
+        Debug.DrawRay(this.transform.position + Vector3.up * 0.1f, Vector3.down, Color.red);
+        if(Physics.Raycast(this.transform.position + Vector3.up * 0.1f, Vector3.down, out hit, 1))
+        {
+            //Debug.Log(hit.point);
+            if(hit.collider.gameObject.tag == "Goomba"){
+                Destroy(hit.collider.gameObject);
+                velocidad.y = 7;
+            }
+
+        }
+
+        characterController.Move(contenedorCamara.transform.TransformDirection(velocidad) * Time.deltaTime); 
         this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, Quaternion.Euler(rotacion), 2);
     }
 }
