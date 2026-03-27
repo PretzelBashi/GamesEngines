@@ -8,6 +8,7 @@ public class Jugador : MonoBehaviour
     Vector3 rotacion;
 
     CharacterController characterController;
+    Transform modeloPersonaje;
     PlayerInput playerInput;
     Vector2 input_movimiento;
     int estado_animacion;
@@ -22,9 +23,10 @@ public class Jugador : MonoBehaviour
     void Start()
     {
         velocidad = Vector3.zero;
-        rotacion = Vector3.zero;
+        rotacion = new Vector3(0,0,0);
 
         characterController = this.GetComponent<CharacterController>();
+        modeloPersonaje = this.transform.GetChild(0);
         playerInput = this.GetComponent<PlayerInput>();
         animator = this.transform.GetChild(0).GetComponent<Animator>();
         animator.SetInteger("Estado", 0);
@@ -129,6 +131,14 @@ public class Jugador : MonoBehaviour
 
         characterController.Move(velocidad * Time.deltaTime);
 
+        if((velocidad.x != 0.2 || velocidad.z != 0.2) || (velocidad.x != -0.2 || velocidad.z != -0.2))
+        {
+            Debug.Log("Calculando");
+            rotacion.y = Herramientas.ObtenerAngulo2D(Vector2.zero, velocidad);
+        }
+        
+
+        modeloPersonaje.rotation = Quaternion.Euler(rotacion);
 
         if (animator.GetInteger("Estado") != estado_animacion)
         {
@@ -137,8 +147,6 @@ public class Jugador : MonoBehaviour
 
             
         }
-
-        Debug.Log(contador_disparando);
     }
 
     public void Saltar(InputAction.CallbackContext callbackContext)
